@@ -76,13 +76,13 @@
             font-size: 14px;
         }
 
-        /* red asterisk */
+        /* Required field indicator (red asterisk) */
         .required {
             color: #e74c3c;
             margin-left: 3px;
         }
 
-                 /* ========================================
+        /* ========================================
            INPUT FIELD STYLES
            Styling for text inputs, email, password, select
            ======================================== */
@@ -96,7 +96,7 @@
             transition: border-color 0.3s ease;
         }
 
-                /* Error state for invalid inputs */
+        /* Error state for invalid inputs */
         .form-group input.error {
             border-color: #e74c3c;
             box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
@@ -146,7 +146,7 @@
         }
 
         .submit-btn:hover {
-            background:rgb(112, 40, 40);
+            background: rgb(112, 40, 40);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(234, 102, 120, 0.3);
         }
@@ -183,36 +183,6 @@
             text-decoration: underline;
         }
 
-        /* Eye icon toggle button */
-        .password-container {
-            position: relative;
-        }
-
-        .password-container input {
-            padding-right: 45px; /* Make room for the eye icon */
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #666;
-            font-size: 18px;
-            padding: 0;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .password-toggle:hover {
-            color: #333;
-        }
         /* ========================================
            RESPONSIVE DESIGN
            Adjusts for mobile screens
@@ -264,31 +234,33 @@
                     autocomplete="email"
                     aria-required="true"
                     placeholder="e.g., student@ashesi.edu.gh">
-                    <div class="error-text" id="email-error">Please enter a valid email address</div>
+                <div class="error-text" id="email-error">Please enter a valid email address</div>
             </div>
 
-<div class="form-group password-container">
-    <label for="login-password">
-        Password 
-        <span class="required" aria-label="required">*</span>
-    </label>
-    <input 
-        type="password" 
-        id="login-password" 
-        name="password" 
-        required 
-        minlength="8"
-        maxlength="32"
-        autocomplete="current-password"
-        aria-required="true"
-        placeholder="Enter your password">
-    <button type="button" class="password-toggle" id="password-toggle-1" aria-label="Toggle password visibility">
-        👁️
-    </button>
-    <div class="helper-text">Password must be at least 8 characters</div>
-    <div class="error-text" id="password-error">Password must be at least 8 characters</div>
-</div>
-
+            <!-- Password Input Field -->
+            <div class="form-group">
+                <label for="login-password">
+                    Password 
+                    <span class="required" aria-label="required">*</span>
+                </label>
+                <!-- 
+                    type="password" - Hides password characters
+                    minlength="8" - Enforces minimum 8 characters
+                    required - Field cannot be empty
+                -->
+                <input 
+                    type="password" 
+                    id="login-password" 
+                    name="password" 
+                    required 
+                    minlength="8"
+                    maxlength="32"
+                    autocomplete="current-password"
+                    aria-required="true"
+                    placeholder="Enter your password">
+                <div class="helper-text">Password must be at least 8 characters</div>
+                <div class="error-text" id="password-error">Password must be at least 8 characters</div>
+            </div>
 
             <!-- Submit Button -->
             <button type="submit" class="submit-btn">Login</button>
@@ -300,111 +272,95 @@
             <!-- Footer with link to registration -->
             <div class="form-footer">
                 Don't have an account? <a href="register.html">Register here</a>
-            </div>  
+            </div>
         </form>
     </div>
-    
-<script>
-    // These are the simulated database values 
-    var validEmail = "student@ashesi.edu.gh"; 
-    var validPassword = "password123"; 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('loginForm');
-        const emailInput = document.getElementById('login-email');
-        const passwordInput = document.getElementById('login-password');
-        const emailError = document.getElementById('email-error');
-        const passwordError = document.getElementById('password-error');
+    <script>
+        // Simulated database values - in a real application these would come from a database
+        var validEmail = "student@ashesi.edu.gh"; // variable holding valid email in JavaScript
+        var validPassword = "password123"; // variable holding valid password in JavaScript
 
-        // Real-time email validation
-        emailInput.addEventListener('input', function() {
-            const email = this.value;
-            if (email && !isValidEmail(email)) {
-                this.classList.add('error');
-                emailError.style.display = 'block';
-            } else {
-                this.classList.remove('error');
-                emailError.style.display = 'none';
-            }
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const emailInput = document.getElementById('login-email');
+            const passwordInput = document.getElementById('login-password');
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
 
-        // Real-time password validation
-        passwordInput.addEventListener('input', function() {
-            const password = this.value;
-            if (password && password.length < 8) {
-                this.classList.add('error');
-                passwordError.style.display = 'block';
-            } else {
-                this.classList.remove('error');
-                passwordError.style.display = 'none';
-            }
-        });
-
-        // Password toggle functionality
-        function setupPasswordToggle(toggleId, inputId) {
-            const toggle = document.getElementById(toggleId);
-            const input = document.getElementById(inputId);
-            
-            toggle.addEventListener('click', function() {
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    toggle.textContent = '🙈';
-                    toggle.setAttribute('aria-label', 'Hide password');
+            // Real-time email validation
+            emailInput.addEventListener('input', function() {
+                const email = this.value;
+                if (email && !isValidEmail(email)) {
+                    this.classList.add('error');
+                    emailError.style.display = 'block';
                 } else {
-                    input.type = 'password';
-                    toggle.textContent = '👁️';
-                    toggle.setAttribute('aria-label', 'Show password');
+                    this.classList.remove('error');
+                    emailError.style.display = 'none';
                 }
             });
-        }
 
-        // ✅ Call the function for your password field
-        setupPasswordToggle("password-toggle-1", "login-password");
-
-        // Form submission validation
-        form.addEventListener('submit', function(e) {
-            let isValid = true;
-            const email = emailInput.value;
-            const password = passwordInput.value;
-
-            // Validate email
-            if (!isValidEmail(email)) {
-                emailInput.classList.add('error');
-                emailError.style.display = 'block';
-                isValid = false;
-            } else {
-                emailInput.classList.remove('error');
-                emailError.style.display = 'none';
-            }
-
-            // Validate password
-            if (password.length < 8) {
-                passwordInput.classList.add('error');
-                passwordError.style.display = 'block';
-                isValid = false;
-            } else {
-                passwordInput.classList.remove('error');
-                passwordError.style.display = 'none';
-            }
-
-            if (isValid) {
-                if (email === validEmail && password === validPassword) {
-                    alert('Login successful!');
+            // Real-time password validation
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                if (password && password.length < 8) {
+                    this.classList.add('error');
+                    passwordError.style.display = 'block';
                 } else {
-                    alert('Invalid email or password. Please try again.');
+                    this.classList.remove('error');
+                    passwordError.style.display = 'none';
                 }
-            } else {
-                alert('Please fix the errors in the form before submitting.');
+            });
+
+            // Form submission validation
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent form submission for demo
+                
+                let isValid = true;
+                const email = emailInput.value;
+                const password = passwordInput.value;
+
+                // Validate email
+                if (!isValidEmail(email)) {
+                    emailInput.classList.add('error');
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    emailInput.classList.remove('error');
+                    emailError.style.display = 'none';
+                }
+
+                // Validate password
+                if (password.length < 8) {
+                    passwordInput.classList.add('error');
+                    passwordError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    passwordInput.classList.remove('error');
+                    passwordError.style.display = 'none';
+                }
+
+                // If form is valid, check credentials
+                if (isValid) {
+                    // In a real application, this would be a server-side check
+                    if (email === validEmail && password === validPassword) {
+                        alert('Login successful!');
+                        // In a real application, you would redirect to the dashboard
+                        // window.location.href = 'dashboard.html';
+                    } else {
+                        alert('Invalid email or password. Please try again.');
+                    }
+                } else {
+                    alert('Please fix the errors in the form before submitting.');
+                }
+            });
+
+            // Email validation function
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
             }
         });
-
-        // Email validation function
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-    });
-</script>
-
+    </script>
 </body>
 </html>
